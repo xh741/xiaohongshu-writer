@@ -72,15 +72,22 @@ if st.button("开始一键生成", type="primary"):
     elif not keyword.strip():
         st.warning("请输入关键词。")
     elif st.session_state.usage_count >= MAX_FREE_LIMIT:
-        # 次数用尽，显示付费提示
+        # 次数用尽，显示付费/加微信提示
         st.error("⚠️ 您今天的免费额度已用完！")
+        
+        # 1. 引导文字
         st.info("""
-        ### 🎉 解锁无限次使用
-        如需继续体验，请扫码订阅（19.9/月）：
-        *(此处可在实际部署时放置您的微信/支付宝收款码图片)*
+        ### 🎉 解锁无限次使用 / 获取专业版
+        微信扫码赞助 **19.9元/月** 即可解锁无限次生成。
+        请在付款备注中留下您的邮箱，或扫码添加作者微信手动激活。
         """)
-        # 也可以在这里放置 Notion 或外部支付页面的链接
-        st.markdown("[👉 点击开通 VIP 无限使用权益](#)")
+        
+        # 2. 展示图片 (图片文件名需与你上传到 GitHub 的完全一致)
+        try:
+            st.image("pay_qr.png", caption="扫码赞助或添加微信", width=250)
+        except Exception as e:
+            # 如果图片加载失败，给一个备用提示，避免程序崩溃
+            st.warning("二维码图片加载中，若未显示，请刷新页面重试。")
     else:
         with st.spinner("AI 正在深度思考并撰写，请稍候..."):
             try:
