@@ -103,9 +103,12 @@ if st.button("开始一键生成", type="primary"):
                 """
                 
                 # 调用 API
-                client = openai.OpenAI(api_key=api_key)
+                client = openai.OpenAI(
+                    api_key=api_key, 
+                    base_url="https://api.deepseek.com" # 指向 DeepSeek 服务器
+                )
                 response = client.chat.completions.create(
-                    model="gpt-4o-mini",  # 兼顾速度、效果与成本
+                    model="deepseek-chat",              # 使用 DeepSeek 的对话模型
                     messages=[
                         {"role": "system", "content": system_instruction},
                         {"role": "user", "content": user_prompt}
